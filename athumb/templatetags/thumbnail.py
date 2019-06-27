@@ -108,8 +108,8 @@ class ThumbnailNode(Node):
                 except:
                     #import traceback
                     #traceback.print_stack()
-                    print "ERROR: Using {% thumbnail %} tag with "\
-                          "a regular ImageField instead of ImageWithThumbsField:", self.source_var
+                    print("ERROR: Using {% thumbnail %} tag with "\
+                          "a regular ImageField instead of ImageWithThumbsField:", self.source_var)
                     return ''
             except ValueError:
                 # This file object doesn't actually have a file. Probably
@@ -183,7 +183,7 @@ def thumbnail(parser, token):
     size_var = args[2]
 
     # Get the options.
-    args_list = split_args(args[3:]).items()
+    args_list = list(split_args(args[3:]).items())
 
     # Check the options.
     opts = {}

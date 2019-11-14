@@ -7,10 +7,8 @@ import os
 import mimetypes
 import re
 
-try:
-    from io import StringIO
-except ImportError:
-    from io import StringIO
+from io import BytesIO as StringIO
+
 
 from django.conf import settings
 from django.core.files.base import File

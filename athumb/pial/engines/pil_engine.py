@@ -1,4 +1,4 @@
-from cStringIO import StringIO
+from io import BytesIO as StringIO
 from athumb.pial.engines.base import EngineBase
 
 try:

@@ -1,11 +1,10 @@
 from distutils.core import setup
-import athumb
 
 long_description = open('README.rst').read()
 
 setup(
     name='django-athumb',
-    version=athumb.VERSION,
+    version='2.4.1',
     packages=['athumb', 'athumb.backends', 'athumb.management',
               'athumb.pial', 'athumb.pial.engines',
               'athumb.management.commands', 'athumb.templatetags',

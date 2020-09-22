@@ -2,15 +2,13 @@
 Incorporated from django-storages, copyright all of those listed in:
 http://code.welldev.org/django-storages/src/tip/AUTHORS
 """
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import os
 import mimetypes
 import re
 
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
+from io import BytesIO as StringIO
+
 
 from django.conf import settings
 from django.core.files.base import File
@@ -129,10 +127,10 @@ class S3BotoStorage(Storage):
         """Retrieves a bucket if it exists, otherwise creates it."""
         try:
             return self.connection.get_bucket(name)
-        except S3ResponseError, e:
+        except S3ResponseError as e:
             if AUTO_CREATE_BUCKET:
                 return self.connection.create_bucket(name)
-            raise ImproperlyConfigured, ("Bucket specified by "
+            raise ImproperlyConfigured("Bucket specified by "
             "AWS_STORAGE_BUCKET_NAME does not exist. Buckets can be "
             "automatically created by setting AWS_AUTO_CREATE_BUCKET=True")
 
@@ -231,7 +229,7 @@ class S3BotoStorage(Storage):
                                             force_http=self.force_no_ssl,
                                             response_headers=response_headers)
 
-    def get_available_name(self, name):
+    def get_available_name(self, name, max_length=None):
         """ Overwrite existing file with the same name. """
         name = self._clean_name(name)
         return name
@@ -262,7 +260,7 @@ class S3BotoStorage_AllPublic(S3BotoStorage):
         Since we assume all public storage with no authorization keys, we can
         just simply dump out a URL rather than having to query S3 for new keys.
         """
-        name = urllib.quote_plus(self._clean_name(name), safe='/')
+        name = urllib.parse.quote_plus(self._clean_name(name), safe='/')
 
         if self.bucket_cname:
             return "http://%s/%s" % (self.bucket_cname, name)

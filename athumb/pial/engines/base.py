@@ -66,7 +66,7 @@ class EngineBase(object):
         :returns: The scaled image. The returned type depends on your
             choice of Engine.
         """
-        x_image, y_image = map(float, self.get_image_size(image))
+        x_image, y_image = list(map(float, self.get_image_size(image)))
 
         # Calculate scaling factor.
         factors = (geometry[0] / x_image, geometry[1] / y_image)
@@ -116,7 +116,7 @@ class EngineBase(object):
             are 'JPEG', 'GIF', 'PNG'. Other formats largely depend on your
             choice of Engine.
         """
-        if isinstance(format, basestring) and format.lower() == 'jpg':
+        if isinstance(format, str) and format.lower() == 'jpg':
             # This mistake is made all the time. Let's just effectively alias
             # this, since it's commonly used.
             format = 'JPEG'
